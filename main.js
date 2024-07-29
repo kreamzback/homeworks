@@ -190,4 +190,4 @@
 
 // console.log(result);
 
-console.log((+null == false) < 1 ** 5);
+//КОНСПЕКТ LESSON_02 
