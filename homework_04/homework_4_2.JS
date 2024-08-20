@@ -1,15 +1,34 @@
 // let isPerfectNumber = 6;
-// let result;
-// for(let i = 1; i <= isPerfectNumber; i++) {
-//   for(let j = 1; j < isPerfectNumber; j++) {
-//     if(isPerfectNumber % j === 0) {
-//       result += j;
-//     } else if (isPerfectNumber % j !== 0) {
-//       continue;
-//     }
-//   } 
-//   return result;
+// let result = 0;
+// for(let i = 1; i <= i / 2; i++) {
+//   if(isPerfectNumber % i === 0) {
+//     result += i;
+//   };
+//   console.log(result);
 // }
+
+const isPerfectNumber = 6;
+let result = 0;
+let arrayOfPerfectNumbers = [];
+for (let i = 1; i <= isPerfectNumber / 2; i++) {
+  if (isPerfectNumber % i === 0) {
+    result += i;
+
+  };
+  if (i === result) {
+    arrayOfPerfectNumbers.push(i);
+    result = 0;
+  };
+}
+console.log(arrayOfPerfectNumbers);
+
+
+
+
+
+
+
+
 
 
 // якщо я правильно зрозумів потрібно перебрати всі числа від 1 до isPerfectNumber

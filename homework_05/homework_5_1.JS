@@ -6,5 +6,5 @@ function reverseString (str) {
   return result;
 }
 
-console.log(reverseString('яблоко'));
+console.log(reverseString('і що сало ласощі'));
 

@@ -1,13 +1,14 @@
 function isPalindrome (str) {
   let reversed = "";
-  for (let i = str.length -1; i >= 0; i--) {
-    reversed += str[i];
+  let unspacedString = str.replaceAll(" ", "");
+  for (let i = unspacedString.length -1; i >= 0; i--) {
+    reversed += unspacedString[i];
   }
-  if (reversed == str) {
+  if (reversed == unspacedString) {
     return "is a palindrome"; 
   } else {
     return "is not a palindrome";
   }
 };
 
-console.log(isPalindrome("тут"));
+console.log(isPalindrome("і що сало ласощі"));

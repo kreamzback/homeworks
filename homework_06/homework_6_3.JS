@@ -4,10 +4,11 @@ function camelCase(str, separator = " ") {
   for (let i = 0; i < lowerCaseStr.length; i++) {
     if (lowerCaseStr[i] == separator) {
       result += lowerCaseStr[i+1].toUpperCase();
+      i++;
     } else {
       result += lowerCaseStr[i];
     };
   };
   return result;
 };
-console.log(camelCase("to string"))
+console.log(camelCase("to string"));
