@@ -1,11 +1,4 @@
-// let isPerfectNumber = 6;
-// let result = 0;
-// for(let i = 1; i <= i / 2; i++) {
-//   if(isPerfectNumber % i === 0) {
-//     result += i;
-//   };
-//   console.log(result);
-// }
+
 
 const isPerfectNumber = 6;
 let result = 0;
