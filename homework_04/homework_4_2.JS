@@ -1,14 +1,23 @@
-const isPerfectNumber = 6;
-let result = 0;
-let arrayOfPerfectNumbers = [];
-for (let i = 1; i <= isPerfectNumber / 2; i++) {
-  if (isPerfectNumber % i === 0) {
-    result += i;
-
-  };
-  if (i === result) {
-    arrayOfPerfectNumbers.push(i);
-    result = 0;
-  };
+function isPerfectNumber(num) {
+  let sum = 0;
+  for (let i = 1; i <= num / 2; i++) {
+      if (num % i === 0) {
+          sum += i;
+      }
+  }
+  return sum === num;
 }
-console.log(arrayOfPerfectNumbers);
+
+function findPerfectNumbers(N) {
+  const perfectNumbers = [];
+  for (let i = 1; i <= N; i++) {
+      if (isPerfectNumber(i)) {
+          perfectNumbers.push(i);
+      }
+  }
+  return perfectNumbers;
+}
+
+let N = 10000;
+const result = findPerfectNumbers(N);
+console.log("Досконалі числа:", result);
