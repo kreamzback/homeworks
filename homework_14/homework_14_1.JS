@@ -1,247 +1,100 @@
-"use strict"
+function Student(firstName, lastName, birthYear) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.birthYear = birthYear;
+  this.courses = [];
+  this.grades = {};
+  this.attendance = {};
 
-// let user = {
-//   firstName: "John",
-//   lastName: "Snow",
-//   age: 30,
-//   get fullName() {
-//     return `${this.FirstName} ${this.LastName}`
-//   },
-//   set fullName(newName) {
-//     let newNameArr = newName.split(" ");
-//     this.lirstName = newNameArr[0];
-//     this.lastName = newNameArr[1];
-//   },
-// };
-// user.fullName = "leo messi";
-// console.log(user.fullName);
+  this.addCourse = function (course) {
+    if (!this.courses.includes(course)) {
+      this.courses.push(course);
+      this.grades[course] = [];
+      this.attendance[course] = [];
+    }
+  };
 
+  this.addGrade = function (course, grade) {
+    if (this.courses.includes(course)) {
+      this.grades[course].push(grade);
+    }
+  };
 
-// let user = {
-//   _phone: "+3806321312",
-//   get phone() {
-//     return this._phone;
-//   },
-//   set phone(newPhone) {
-//     if(newPhone.startsWith("+380")){
-//       this._phone = newPhone;
-//     } else {
-//       console.log("dont currently");
-//     };
-//   },
-// };
-// user.phone = "+38021321312"
-// console.log(user.phone);
+  this.addAttendance = function (course, isPresent) {
+    if (this.courses.includes(course)) {
+      this.attendance[course].push(isPresent);
+    }
+  };
 
-// let user1 = {
-//   name: "Leonardo Dicaprio",
-// };
+  this.getAverageGrade = function (course) {
+    if (this.grades[course] && this.grades[course].length > 0) {
+      const sum = this.grades[course].reduce((acc, grade) => acc + grade, 0);
+      return sum / this.grades[course].length;
+    }
+    return 0;
+  };
 
-// let user2 = {
-//   __proto__: user1,
-// };
+  this.getAverageAttendance = function (course) {
+    if (this.attendance[course] && this.attendance[course].length > 0) {
+      const presentDays = this.attendance[course].filter(day => day === true).length;
+      return presentDays / this.attendance[course].length;
+    }
+    return 0;
+  };
+}
 
-// let user3 = {
-//   name: "Peter Parker",
-//   __proto__: user2,
-// };
+function Group() {
+  this.students = [];
 
-// console.log(user3.name);
+  this.addStudent = function (student) {
+    this.students.push(student);
+  };
 
-// let animal = {
-//   sleep () {
-//     console.log("i'm sleep");
-//   },
-// };
+  this.removeStudent = function (student) {
+    this.students = this.students.filter(s => s !== student);
+  };
 
-// let cat = { 
-//   eat() {
-//     console.log("i'm eat");
-//   },
-//   __proto__: animal,
-// };
+  this.getPerformanceRanking = function (course) {
+    return this.students
+      .map(student => ({
+        student: `${student.firstName} ${student.lastName}`,
+        averageGrade: student.getAverageGrade(course),
+      }))
+      .sort((a, b) => b.averageGrade - a.averageGrade);
+  };
 
-// let dankey = {
-//   say() {
-//     console.log("iaiaia");
-//   },
-//   __proto__: animal,
-// };
+  this.getAttendanceRanking = function (course) {
+    return this.students
+      .map(student => ({
+        student: `${student.firstName} ${student.lastName}`,
+        averageAttendance: student.getAverageAttendance(course),
+      }))
+      .sort((a, b) => b.averageAttendance - a.averageAttendance); // Сортуємо від більшого до меншого
+  };
+}
 
-// let shrekDankey = {
-//   say() {
-//     console.log("We drived?");
-//   },
-//   __proto__: dankey,
-// }
+const student1 = new Student('Іван', 'Петров', 2000);
+const student2 = new Student('Олена', 'Сидоренко', 2001);
 
-// dankey.say();
-// dankey.sleep();
+student1.addCourse('Математика');
+student2.addCourse('Математика');
 
-// shrekDankey.sleep();
-// shrekDankey.say();
+student1.addGrade('Математика', 85);
+student1.addGrade('Математика', 90);
+student2.addGrade('Математика', 95);
+student2.addGrade('Математика', 88);
 
+student1.addAttendance('Математика', true);
+student1.addAttendance('Математика', false);
+student2.addAttendance('Математика', true);
+student2.addAttendance('Математика', true);
 
+const group = new Group();
+group.addStudent(student1);
+group.addStudent(student2);
 
-// let user = {
-//   role: "user",
-//   login() {
-//     console.log("Hello! I'm logged in!");
-//   },
-//   logout() {
-//     console.log("Good Bye! I'm logged out!");
-//   },
-// };
+console.log('Рейтинг за успішністю:');
+console.log(group.getPerformanceRanking('Математика'));
 
-// let admin = {
-//   role: "Admin",
-//   addProduct(productName) {
-//     console.log(`Я додав новий продукт - ${productName}`);
-//   },
-//   __proto__: user,
-// };
-
-// let superAdmin = {
-//   role: "SuperAdmin",
-//   createAdmin(adminName) {
-//     console.log(`Я створив нового адміна - ${adminName}`);
-//   },
-//   __proto__: admin,
-// };
-
-// // [[Prototype]]
-
-// // obj.hasOwnProperty(key)
-// // console.log(Object.hasOwn(superAdmin, "createAdmin"));
-// // console.log(Object.getOwnPropertyNames(admin));
-// // console.log(superAdmin.hasOwnProperty("login"));
-// // console.log(Object.getOwnPropertySymbols(admin));
-
-
-// // for (const key in superAdmin) {
-// //   console.log("key:", key);
-// //   console.log("value:", superAdmin[key]);
-// //   console.log("====================");
-// // };
-
-
-
-// // superAdmin[[Prototype]]
-
-
-// // superAdmin.addProduct("Iphone");
-// // superAdmin.login();
-// // superAdmin.logout();
-// // superAdmin.createAdmin("Vasya");
-
-// let animal = {
-//   sleep () {
-//     console.log("i'm sleep");
-//   },
-// };
-
-
-// function Cat(name, color) {
-//   this.name = name;
-//   this.color = name;
-// };
-
-// Cat.prototype = {
-//   play() {
-//     console.log("Im playing!");
-//   },
-//   say() {
-//     console.log("meow!");
-//   },
-//   __proto__: animal,
-// };
-
-// let tom = new Cat ("Tom", "blue");
-// let garfield = new Cat ("Garfield", "orange");
-
-// tom.play();
-// garfield.play();
-
-// tom.say();
-// garfield.say();
-
-// tom.sleep();
-// garfield.sleep();
-
-
-// let animal = {
-//   sleep () {
-//     console.log("i'm sleep");
-//   },
-// };
-
-//Object.create(proto, {})
-
-// let cat = Object.create(animal , { 
-//   eat() {
-//     console.log("i'm eat");
-//   },
-// });
-
-// Object.setPrototypeOf(obj, proto)
-// Object.setPrototypeOf(cat, animal);
-
-// Object.getPrototypeOf(obj, proto)
-// console.log(Object.getPrototypeOf(cat));
-
-//obj.isPrototypeOf()
-// console.log(animal.isPrototypeOf(cat))
-
-// let cat = Object.create(animal, {
-//   play() {
-//     console.log("I'm playing!");
-//   },
-// });
-
-// let arr = [2, 4, 6, 8];
-// let arr2 = new Array(2, 4, 6, 8);
-// console.log(arr);
-
-// arr.forEach((item) => {
-//   console.log(item);
-// });
-
-// console.log(Array.prototype);
-// Array.prototype[[Prototype]] = Object.prototype
-// console.log(Object.prototype);
-
-
-
-// let obj = {
-//   age: 30,
-// };
-
-// let obj2 = new Object({
-//   age: 30,
-// });
-
-// console.log(obj);
-// console.log(obj2);
-
-
-// Array.prototype.ourMap = function (cb) {
-//   let result = [];
-//   for (let i = 0; i < this.length; i++) {
-//     result[i] = cb(this[i], i, this);
-//   };
-// };
-
-// let arr = [1, 3, 4, 7];
-// let arr2 = [1, 2, 6, 10];
-
-// let newArr = arr.ourMap((item) => {
-//   return item ** 2;
-// });
-// let newArr2 = arr2.ourMap((item) => {
-//   return item ** 2;
-// });
-
-// console.log(newArr);
-// console.log(newArr2);
-
-
+console.log('Рейтинг за відвідуваністю:');
+console.log(group.getAttendanceRanking('Математика'));
