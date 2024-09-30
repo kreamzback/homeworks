@@ -10,12 +10,12 @@ function counter (startValue, step) {
   };
 
   count.decrement = function() {
-    currentValue = startValue;
+    currentValue -= step;
     return currentValue;
   };
 
   count.reset = function() {
-    currentValue = step;
+    currentValue = startValue;
     return currentValue;
   };
 
@@ -24,4 +24,4 @@ function counter (startValue, step) {
 
 const myCounter = counter(10, 2);
 
-console.log(myCounter.decrement());
+console.log(myCounter.reset());
